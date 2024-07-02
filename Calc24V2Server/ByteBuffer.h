@@ -23,6 +23,7 @@ public:
     void append(const char* buf, int bufLen);
     void retrieve(std::string& outBuf, int buf = 0);
 
+    int remaining();
 
     void clear();
 private:

@@ -1,0 +1,24 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/Calc24V2/FileContentIndex/1259e55a-beb3-41f2-8bb9-988aedb58f43.vsidx
+/.vs/Calc24V2/FileContentIndex/335a38c8-22b0-4ca3-92c4-f06690457204.vsidx
+/.vs/Calc24V2/FileContentIndex/a191307c-a306-4bf7-a21b-a7361ab97926.vsidx
+/.vs/Calc24V2/FileContentIndex/cf7764a9-3c64-47b2-9769-70c7adcf5866.vsidx
+/.vs/Calc24V2/FileContentIndex/e958bddf-5285-4b04-8634-70f0cb4b188a.vsidx
+/.vs/Calc24V2/v17/.suo
+/.vs/Calc24V2/v17/Browse.VC.db
+/.vs/Calc24V2/v17/Browse.VC.db-shm
+/.vs/Calc24V2/v17/Browse.VC.db-wal
+/.vs/Calc24V2/v17/Browse.VC.opendb
+/.vs/Calc24V2/v17/DocumentLayout.json
+/.vs/Calc24V2/v17/ipch/AutoPCH/21efea09c3070239/TCPCONNECTION.ipch
+/.vs/Calc24V2/v17/ipch/AutoPCH/7288793d6b844c60/IEVENTDISPATCHER.ipch
+/.vs/Calc24V2/v17/ipch/AutoPCH/96c59cf93a037927/BYTEBUFFER.ipch
+/.vs/Calc24V2/v17/ipch/AutoPCH/a5a7fcf459581a68/TCPCONNECTION.ipch
+/.vs/Calc24V2/v17/ipch/AutoPCH/daa9151dd5e202a1/EVENTLOOP.ipch
+/.vs/Calc24V2/v17/ipch/AutoPCH/dc2776ce71c7a6c/EVENTLOOP.ipch
+/.vs/Calc24V2/v17/Solution.VC.db
+/.vs/Calc24V2/FileContentIndex/7af44c22-b7cf-4140-919b-35c109350fbb.vsidx
+/.vs/Calc24V2/FileContentIndex/0154249a-02c6-4579-9d48-c2b04ade0c4a.vsidx

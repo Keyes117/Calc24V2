@@ -43,6 +43,11 @@ void ByteBuffer::retrieve(std::string& outBuf, int bufLen/* = 0*/)
     m_internalBuf.erase(0, bufLen);
 }
 
+int ByteBuffer::remaining()
+{
+    return m_internalBuf.length();
+}
+
 void ByteBuffer::clear()
 {
     m_internalBuf.clear();
