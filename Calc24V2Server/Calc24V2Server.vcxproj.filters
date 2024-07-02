@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="appsrc">
+      <UniqueIdentifier>{61eb1b76-ff27-4aa7-a8fc-5264a3f6020d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="net">
+      <UniqueIdentifier>{68820f9b-ae88-4d08-99dc-b653a067a593}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="EventLoop.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="TCPConnection.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="ByteBuffer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="EventLoop.h">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="IEventDispatcher.h">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="TCPConnection.h">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="ByteBuffer.h" />
+  </ItemGroup>
+</Project>
