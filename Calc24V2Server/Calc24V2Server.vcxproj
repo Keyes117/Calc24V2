@@ -129,13 +129,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ByteBuffer.cpp" />
+    <ClCompile Include="Epoll.cpp" />
     <ClCompile Include="EventLoop.cpp" />
+    <ClCompile Include="Poll.cpp" />
+    <ClCompile Include="Select.cpp" />
     <ClCompile Include="TCPConnection.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ByteBuffer.h" />
+    <ClInclude Include="Epoll.h" />
     <ClInclude Include="EventLoop.h" />
     <ClInclude Include="IEventDispatcher.h" />
+    <ClInclude Include="IOMultiplex.h" />
+    <ClInclude Include="Poll.h" />
+    <ClInclude Include="Select.h" />
     <ClInclude Include="TCPConnection.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

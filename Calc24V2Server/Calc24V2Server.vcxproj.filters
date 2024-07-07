@@ -15,7 +15,18 @@
     <ClCompile Include="TCPConnection.cpp">
       <Filter>net</Filter>
     </ClCompile>
-    <ClCompile Include="ByteBuffer.cpp" />
+    <ClCompile Include="ByteBuffer.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="Epoll.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="Poll.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="Select.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EventLoop.h">
@@ -27,6 +38,20 @@
     <ClInclude Include="TCPConnection.h">
       <Filter>net</Filter>
     </ClInclude>
-    <ClInclude Include="ByteBuffer.h" />
+    <ClInclude Include="ByteBuffer.h">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="IOMultiplex.h">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="Epoll.h">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="Poll.h">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="Select.h">
+      <Filter>net</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
