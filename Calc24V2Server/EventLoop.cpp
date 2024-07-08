@@ -10,9 +10,9 @@
 
 bool EventLoop::init()
 {
+    //创建IO复用函数 
     // m_pIOMultiplex = new Poll();
     // m_pIOMultiplex = new Select();
-
     m_pIOMultiplex = new Epoll();
 
     m_epollfd = ::epoll_create(1);
@@ -22,6 +22,7 @@ bool EventLoop::init()
 
 void EventLoop::run()
 {
+    //one thread one loop
     while (m_running)
     {
         //1. 检测和处理定时器事件
