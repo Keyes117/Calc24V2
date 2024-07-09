@@ -16,11 +16,90 @@ TCPConnection::~TCPConnection()
     ::close(m_fd);
 }
 
+TCPConnection::TCPConnection(const TCPConnection& rhs) :
+    m_fd(rhs.m_fd),
+    m_registerWriteEvent(rhs.m_registerWriteEvent),
+    m_isListenfd(rhs.m_isListenfd),
+    m_enableRead(rhs.m_enableRead),
+    m_enableWrite(rhs.m_enableWrite),
+    m_recvBuf(rhs.m_recvBuf),
+    m_sendBuf(rhs.m_sendBuf),
+    m_readCallback(rhs.m_readCallback),
+    m_writeCallback(rhs.m_writeCallback),
+    m_closeCallback(rhs.m_closeCallback),
+    m_spEventLoop(rhs.m_spEventLoop)
+{
+
+
+}
+
+// 拷贝赋值运算符
+TCPConnection& TCPConnection::operator=(const TCPConnection& rhs) {
+    if (this != &rhs) {
+        m_fd = rhs.m_fd;
+        m_registerWriteEvent = rhs.m_registerWriteEvent;
+        m_isListenfd = rhs.m_isListenfd;
+        m_enableRead = rhs.m_enableRead;
+        m_enableWrite = rhs.m_enableWrite;
+        m_recvBuf = rhs.m_recvBuf;
+        m_sendBuf = rhs.m_sendBuf;
+        m_readCallback = rhs.m_readCallback;
+        m_writeCallback = rhs.m_writeCallback;
+        m_closeCallback = rhs.m_closeCallback;
+        m_spEventLoop = rhs.m_spEventLoop;
+    }
+    return *this;
+}
+
+// 移动构造函数
+TCPConnection::TCPConnection(TCPConnection&& rhs) noexcept
+    : m_fd(rhs.m_fd),
+    m_registerWriteEvent(rhs.m_registerWriteEvent),
+    m_isListenfd(rhs.m_isListenfd),
+    m_enableRead(rhs.m_enableRead),
+    m_enableWrite(rhs.m_enableWrite),
+    m_recvBuf(std::move(rhs.m_recvBuf)),
+    m_sendBuf(std::move(rhs.m_sendBuf)),
+    m_readCallback(std::move(rhs.m_readCallback)),
+    m_writeCallback(std::move(rhs.m_writeCallback)),
+    m_closeCallback(std::move(rhs.m_closeCallback)),
+    m_spEventLoop(std::move(rhs.m_spEventLoop)) {
+    rhs.m_fd = -1;
+    rhs.m_registerWriteEvent = false;
+    rhs.m_isListenfd = false;
+    rhs.m_enableRead = false;
+    rhs.m_enableWrite = false;
+}
+
+// 移动赋值运算符
+TCPConnection& TCPConnection::operator=(TCPConnection&& rhs) noexcept {
+    if (this != &rhs) {
+        m_fd = rhs.m_fd;
+        m_registerWriteEvent = rhs.m_registerWriteEvent;
+        m_isListenfd = rhs.m_isListenfd;
+        m_enableRead = rhs.m_enableRead;
+        m_enableWrite = rhs.m_enableWrite;
+        m_recvBuf = std::move(rhs.m_recvBuf);
+        m_sendBuf = std::move(rhs.m_sendBuf);
+        m_readCallback = std::move(rhs.m_readCallback);
+        m_writeCallback = std::move(rhs.m_writeCallback);
+        m_closeCallback = std::move(rhs.m_closeCallback);
+        m_spEventLoop = std::move(rhs.m_spEventLoop);
+
+        rhs.m_fd = -1;
+        rhs.m_registerWriteEvent = false;
+        rhs.m_isListenfd = false;
+        rhs.m_enableRead = false;
+        rhs.m_enableWrite = false;
+    }
+    return *this;
+}
+
 bool TCPConnection::send(const char* buf, int bufLen)
 {
     m_sendBuf.append(buf, bufLen);
 
-   
+
     while (true)
     {
         int sendLength = ::send(m_fd, m_sendBuf, m_sendBuf.remaining(), 0);
@@ -56,7 +135,7 @@ bool TCPConnection::send(const char* buf, int bufLen)
         if (m_sendBuf.isEmpty())
             return true;
     }
-  
+
 
 }
 
@@ -113,7 +192,7 @@ void TCPConnection::onWrite()
         {
             //对端关闭了链接 
             onClose();
-            return ;
+            return;
         }
         else if (sendLength < 0)
         {
@@ -126,18 +205,18 @@ void TCPConnection::onWrite()
 
                 registerWriteEvent();
 
-                return ;
+                return;
             }
 
             //其他情况就是出错了， 关闭链接 
             onClose();
-            return ;
+            return;
         }
 
         //发送成功了
         m_sendBuf.erase(sendLength);
         if (m_sendBuf.isEmpty())
-            return ;
+            return;
     }
 }
 

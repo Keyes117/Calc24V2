@@ -24,6 +24,13 @@ public:
     virtual ~TCPConnection();
 
     //TODO: 移动构造、 拷贝构造
+    TCPConnection(const TCPConnection& rhs);
+    TCPConnection& operator=(const TCPConnection& rhs);
+
+    TCPConnection(TCPConnection&& rhs) noexcept;
+    TCPConnection& operator=(TCPConnection&& rhs);
+
+
 
     void setReadCallback(ReadCallback&& readCallback)
     {
@@ -56,9 +63,9 @@ private:
     void registerWriteEvent();
     void unregisterWriteEvent();
 
-    
+
     void unregisterAllEvent();
-    
+
 
 private:
     int                             m_fd;
@@ -73,7 +80,7 @@ private:
     ReadCallback                    m_readCallback;
     WriteCallback                   m_writeCallback;
     CloseCallback                   m_closeCallback;
-        
+
     std::shared_ptr<EventLoop>      m_spEventLoop;
 
 };

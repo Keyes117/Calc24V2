@@ -9,7 +9,6 @@
 class ByteBuffer
 {
 public:
-    //TODO:完成构造、析构 拷贝构造、移动构造的逻辑 
     ByteBuffer();
     ~ByteBuffer();
 
