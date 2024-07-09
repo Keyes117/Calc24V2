@@ -8,22 +8,36 @@ ByteBuffer::~ByteBuffer()
 {
 }
 
-ByteBuffer::ByteBuffer(const ByteBuffer& rhs)
+ByteBuffer::ByteBuffer(const ByteBuffer& rhs) :
+    m_internalBuf(rhs.m_internalBuf)
 {
+
 }
 
 ByteBuffer& ByteBuffer::operator=(const ByteBuffer& rhs)
 {
     // TODO: insert return statement here
+    if (this != &rhs)
+    {
+        m_internalBuf = rhs.m_internalBuf;
+    }
+    return *this;
 }
 
-ByteBuffer::ByteBuffer(ByteBuffer&& rhs)
+ByteBuffer::ByteBuffer(ByteBuffer&& rhs) :
+    m_internalBuf(std::move(rhs.m_internalBuf))
 {
+
 }
 
 ByteBuffer& ByteBuffer::operator=(ByteBuffer&& rhs)
 {
     // TODO: insert return statement here
+    if (this != &rhs)
+    {
+        m_internalBuf = std::move(rhs.m_internalBuf);
+    }
+    return *this;
 }
 
 
@@ -72,6 +86,6 @@ void ByteBuffer::clear()
 
 bool ByteBuffer::isEmpty()
 {
-    
+
     return m_internalBuf.empty();
 }
