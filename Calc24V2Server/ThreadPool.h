@@ -11,6 +11,8 @@
 #include <thread>
 #include <vector>
 
+#include "EventLoop.h"
+
 
 class ThreadPool final
 {
@@ -21,12 +23,19 @@ public:
     void start(int32_t threadNum = 1);
     void stop();
 
+    std::shared_ptr<EventLoop> getNextEventLoop();
+
+
+
 private:
-    void threadFunc();
+    void threadFunc(size_t eventLoopIndex);
 
 private:
     bool                                                m_stop{ false };
+    size_t                                              m_lastEventLoopNo{ 0 };
+    
     std::vector<std::shared_ptr<std::thread>>           m_threads;
+    std::vector<std::shared_ptr<EventLoop>>             m_eventLoops;
 
 
 private:

@@ -128,9 +128,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Acceptor.cpp" />
     <ClCompile Include="ByteBuffer.cpp" />
     <ClCompile Include="Epoll.cpp" />
     <ClCompile Include="EventLoop.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="Poll.cpp" />
     <ClCompile Include="Select.cpp" />
     <ClCompile Include="TCPConnection.cpp" />
@@ -138,6 +140,7 @@
     <ClCompile Include="ThreadPool.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Acceptor.h" />
     <ClInclude Include="ByteBuffer.h" />
     <ClInclude Include="Epoll.h" />
     <ClInclude Include="EventLoop.h" />

@@ -6,7 +6,15 @@
 
 #include "ThreadPool.h"
 
+
+#include <memory>
+#include <string>
+#include <unordered_map>
+
+#include "Acceptor.h"
+#include "TCPConnection.h"
 #include "EventLoop.h"
+
 
 class TCPServer
 {
@@ -14,21 +22,26 @@ public:
     TCPServer() = default;
     virtual ~TCPServer() = default;
 
-    void init(int32_t threadNum, const std::string& ip, uint16_t port);
+    bool init(int32_t threadNum, const std::string& ip, uint16_t port);
     void uinit();
 
-private:
-    bool startListen();
+    void start();
 
 private:
-    int                 m_listenfd{ -1 };
-    std::string         m_ip;
-    uint16_t            m_port;
+    //客户端的连接应该有Server来管理，Acceptor应该只管理监听
+    void onAccept(int clientfd);
 
-    ThreadPool          m_threadPool;
 
-    EventLoop           m_baseEventLoop;
+private:
+    std::string                                                 m_ip;
+    uint16_t                                                    m_port;
 
+    ThreadPool                                                  m_threadPool;
+
+    EventLoop                                                   m_baseEventLoop;
+    Acceptor*                                                   m_acceptor;
+    
+    std::unordered_map<int, std::shared_ptr<TCPConnection>>     m_connections;
 
 };
 

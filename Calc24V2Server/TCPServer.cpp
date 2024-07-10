@@ -1,46 +1,45 @@
 #include "TCPServer.h"
 
 
-void TCPServer::init(int32_t threadNum, const std::string& ip, uint16_t port)
+
+bool TCPServer::init(int32_t threadNum, const std::string& ip, uint16_t port)
 {
     m_threadPool.start(threadNum);
 
-    //TODO：做一些必要的校验 
+    //TODO：对ip和port做一些必要的校验 
     m_ip = ip;
     m_port = port;
 
-    startListen();
+    m_baseEventLoop.init();
+
+    m_acceptor = new Acceptor(&m_baseEventLoop);
+    if (m_acceptor->startListen(ip, port))
+        return false;
+
+
+    return true;
 }
 
 void TCPServer::uinit()
 {
     m_threadPool.stop();
 
-    if (m_listenfd != -1)
-    {
-        ::close(m_listenfd);
-        m_listenfd = -1;
-    }
+  
 }
 
-bool TCPServer::startListen()
+void TCPServer::start()
 {
-    m_listenfd = ::socket(AF_INET, SOCKET_STREAM, 0);
-    if (m_listenfd == -1)
-        return false;
-
-    int optval = 1;
-    ::setsockopt(m_listenfd, SOL_SOCKET, SO_REUSEADDR, &optval, static_cast<socklen_t>(sizeof optval));
-    ::setsockopt(m_listenfd, SOL_SOCKET, SO_REUSEPORT, &optval, static_cast<socklen_t>(sizeof optval));
-
-    struct socketaddr_in bindaddr;
-    bindaddr.sin_family = AF_INET;
-    bindaddr.sin_addr.s_addr = m_ip/*htonl(INADDR_ANY)*/;
-    bindaddr.sin_port = htonl(m_port);
-
-    if (::bind(m_listenfd, (struct sockaddr*)&bindaddr, sizeof(bindaddr)) == -1)
-        return false;
-
-    if (::listen(m_listenfd, SOMAXCONN) == -1)
-        return false;
+    m_baseEventLoop.run();
 }
+
+void TCPServer::onAccept(int clientfd)
+{
+    auto spTCPConnection = std::make_shared<TCPConnection>(clientfd);
+
+    m_connections[clientfd] = std::move(spTCPConnection);
+
+    std::shared_ptr<EventLoop> spEventLoop = m_threadPool.getNextEventLoop();
+    spEventLoop->registerReadEvents(clientfd,true);
+    
+}
+

@@ -13,8 +13,12 @@ void ThreadPool::start(int32_t threadNum /*=1*/)
 
     for (size_t i = 0; i < threadNum; ++i)
     {
+        auto spEventLoop = std::make_shared<EventLoop>();
+        spEventLoop->init();
+        m_eventLoops.push_back(std::move(spEventLoop));
+
         //pthread_create
-        auto spThread = std::make_shared<std::thread>(threadFunc);
+        auto spThread = std::make_shared<std::thread>(threadFunc,this,i);
         m_threads.push_back(std::move(spThread));
 
     }
@@ -32,14 +36,23 @@ void ThreadPool::stop()
 
 }
 
-void ThreadPool::threadFunc()
+std::shared_ptr<EventLoop> ThreadPool::getNextEventLoop()
 {
-    EventLoop eventLoop;
-    eventLoop.init();
 
+    auto spEventLoop = m_eventLoops[m_lastEventLoopNo];
+
+    ++m_lastEventLoopNo;
+    if (m_lastEventLoopNo >= m_eventLoops.size())
+        m_lastEventLoopNo = 0;
+
+    return spEventLoop;
+}
+
+void ThreadPool::threadFunc(size_t eventLoopIndex)
+{
     while (!m_stop)
     {
         //实际的工作线程
-        eventLoop.run();
+        m_eventLoops[eventLoopIndex]->run();
     }
 }
