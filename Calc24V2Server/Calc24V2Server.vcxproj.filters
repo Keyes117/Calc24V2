@@ -27,6 +27,12 @@
     <ClCompile Include="Select.cpp">
       <Filter>net</Filter>
     </ClCompile>
+    <ClCompile Include="ThreadPool.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="TCPServer.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EventLoop.h">
@@ -51,6 +57,12 @@
       <Filter>net</Filter>
     </ClInclude>
     <ClInclude Include="Select.h">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadPool.h">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="TCPServer.h">
       <Filter>net</Filter>
     </ClInclude>
   </ItemGroup>
