@@ -1,6 +1,6 @@
 #include "TCPServer.h"
 
-
+#include <functional>
 
 bool TCPServer::init(int32_t threadNum, const std::string& ip, uint16_t port)
 {
@@ -16,11 +16,12 @@ bool TCPServer::init(int32_t threadNum, const std::string& ip, uint16_t port)
     if (m_acceptor->startListen(ip, port))
         return false;
 
-
+    //TODO:AcceptCallback实际只有一个参数， 但是bind 了this指针 会有问题吗？
+    m_acceptor->setAcceptCallback(std::bind(TCPServer::onAccept, this,std::placeholders::_1)); 
     return true;
 }
 
-void TCPServer::uinit()
+void TCPServer::uninit()
 {
     m_threadPool.stop();
 
@@ -34,12 +35,17 @@ void TCPServer::start()
 
 void TCPServer::onAccept(int clientfd)
 {
-    auto spTCPConnection = std::make_shared<TCPConnection>(clientfd);
-
-    m_connections[clientfd] = std::move(spTCPConnection);
-
+    
     std::shared_ptr<EventLoop> spEventLoop = m_threadPool.getNextEventLoop();
-    spEventLoop->registerReadEvents(clientfd,true);
+
+    auto spTCPConnection = std::make_shared<TCPConnection>(clientfd);
+    spTCPConnection->startRead();
+   
+    //如果用户想 做一些自己的事情
+    m_connectedCallback(spTCPConnection);
+
+    //m_connections[clientfd] = std::move(spTCPConnection);
+   
     
 }
 

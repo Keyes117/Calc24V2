@@ -33,6 +33,18 @@
     <ClCompile Include="TCPServer.cpp">
       <Filter>net</Filter>
     </ClCompile>
+    <ClCompile Include="Acceptor.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>appsrc</Filter>
+    </ClCompile>
+    <ClCompile Include="Calc24Server.cpp">
+      <Filter>appsrc</Filter>
+    </ClCompile>
+    <ClCompile Include="Calc24Session.cpp">
+      <Filter>appsrc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EventLoop.h">
@@ -64,6 +76,18 @@
     </ClInclude>
     <ClInclude Include="TCPServer.h">
       <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="Acceptor.h">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="Calc24Server.h">
+      <Filter>appsrc</Filter>
+    </ClInclude>
+    <ClInclude Include="Calc24Session.h">
+      <Filter>appsrc</Filter>
+    </ClInclude>
+    <ClInclude Include="Calc24Protocol.h">
+      <Filter>appsrc</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

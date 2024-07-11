@@ -7,6 +7,9 @@
 #include "EventLoop.h"
 #include "IEventDispatcher.h"
 
+#include <functional>
+
+using AcceptCallback = std::function<void(int clientfd)>;
 
 class Acceptor final : public IEventDispatcher
 {
@@ -14,15 +17,23 @@ public:
     Acceptor(EventLoop* pEventLoop) ;
     ~Acceptor();
 
+    //void onAccept(int clientfd);
+
     virtual void onRead() override;
 
     bool startListen(const std::string& ip, uint16_t port);
+
+    void setAcceptCallback(AcceptCallback&& callback)
+    {
+        m_acceptCallback = std::move(callback);
+    }
 
 
 private:
     int                 m_listenfd;
     EventLoop*          m_pEventLoop;
 
+    AcceptCallback      m_acceptCallback;
 private:
     virtual void onWrite() override {}
 

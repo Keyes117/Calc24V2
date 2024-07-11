@@ -130,6 +130,8 @@
   <ItemGroup>
     <ClCompile Include="Acceptor.cpp" />
     <ClCompile Include="ByteBuffer.cpp" />
+    <ClCompile Include="Calc24Server.cpp" />
+    <ClCompile Include="Calc24Session.cpp" />
     <ClCompile Include="Epoll.cpp" />
     <ClCompile Include="EventLoop.cpp" />
     <ClCompile Include="main.cpp" />
@@ -142,6 +144,9 @@
   <ItemGroup>
     <ClInclude Include="Acceptor.h" />
     <ClInclude Include="ByteBuffer.h" />
+    <ClInclude Include="Calc24Protocol.h" />
+    <ClInclude Include="Calc24Server.h" />
+    <ClInclude Include="Calc24Session.h" />
     <ClInclude Include="Epoll.h" />
     <ClInclude Include="EventLoop.h" />
     <ClInclude Include="IEventDispatcher.h" />

@@ -26,6 +26,8 @@ void Acceptor::onRead()
         if (clientfd > 0)
         {
             //成功接收链接 
+            m_acceptCallback(clientfd);
+
         }
         else if (clientfd == -1)
         {

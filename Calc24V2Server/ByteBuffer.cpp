@@ -63,6 +63,33 @@ void ByteBuffer::retrieve(std::string& outBuf, int bufLen/* = 0*/)
     m_internalBuf.erase(0, bufLen);
 }
 
+size_t ByteBuffer::retrieve(char* outBuf, size_t bufLen)
+{
+    if (bufLen == 0)
+        return 0;
+
+    if (bufLen >= m_internalBuf.size())
+        bufLen = m_internalBuf.size();
+
+    memcpy(outBuf, m_internalBuf.c_str(), bufLen);
+    m_internalBuf.erase(0, bufLen);
+    return bufLen;
+
+}
+
+size_t ByteBuffer::peek(char* buf, size_t bufLen)
+{
+    if (bufLen == 0)
+        return 0;
+
+    if (bufLen >= m_internalBuf.size())
+        bufLen = m_internalBuf.size();
+
+    memcpy(buf, m_internalBuf.c_str(), bufLen);
+
+    return bufLen;
+}
+
 void ByteBuffer::erase(int bufLen /*= 0*/)
 {
     if (bufLen == 0 || bufLen >= m_internalBuf.length())

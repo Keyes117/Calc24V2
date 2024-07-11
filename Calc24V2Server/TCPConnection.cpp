@@ -6,14 +6,21 @@
 
 //#include <cerrno>
 
-TCPConnection::TCPConnection(const std::shared_ptr<EventLoop>& spEventLoop)
-    :m_spEventLoop(spEventLoop)
+TCPConnection::TCPConnection(int clientfd, const std::shared_ptr<EventLoop>& spEventLoop):
+    m_fd(clientfd),
+    m_spEventLoop(spEventLoop)    
 {
+
 }
 
 TCPConnection::~TCPConnection()
 {
     ::close(m_fd);
+}
+
+bool TCPConnection::startRead()
+{
+    m_spEventLoop->registerReadEvents(m_fd, true);
 }
 
 TCPConnection::TCPConnection(const TCPConnection& rhs) :

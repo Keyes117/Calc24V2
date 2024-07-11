@@ -11,7 +11,7 @@
 #include "EventLoop.h"
 #include "IEventDispatcher.h"
 
-
+//ReadCallback 如果返回false 表示上层业务逻辑认为 处理出错， 希望关闭连接
 using ReadCallback = std::function<bool(ByteBuffer& buf)>;
 using WriteCallback = std::function<void()>;
 using CloseCallback = std::function<void()>;
@@ -20,10 +20,11 @@ using CloseCallback = std::function<void()>;
 class TCPConnection : public IEventDispatcher
 {
 public:
-    TCPConnection(const std::shared_ptr<EventLoop>& spEventLoop);
+    TCPConnection(int clientfd,const std::shared_ptr<EventLoop>& spEventLoop);
     virtual ~TCPConnection();
 
-    //TODO: 移动构造、 拷贝构造
+    bool startRead();
+
     TCPConnection(const TCPConnection& rhs);
     TCPConnection& operator=(const TCPConnection& rhs);
 
