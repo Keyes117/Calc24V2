@@ -9,7 +9,9 @@ class Calc24Session
 public:
     Calc24Session(std::shared_ptr<TCPConnection>&& spConn);
     ~Calc24Session() = default;
-     
+
+
+ 
     void onRead(ByteBuffer& recvBuf);
     void onWrite();
 

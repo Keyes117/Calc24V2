@@ -179,9 +179,11 @@ void TCPConnection::onRead()
     m_recvBuf.append(buf, recvLength);
 
     //解包
-    //m_readCallback=>Calc24Session::onRead
-    m_readCallback(m_recvBuf);
-   
+    if (!m_readCallback(m_recvBuf))
+    {
+        //关闭链接 
+        onClose();
+    }
 }
 
 void TCPConnection::onWrite()

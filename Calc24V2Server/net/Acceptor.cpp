@@ -42,7 +42,7 @@ void Acceptor::onRead()
    
 }
 
-bool Acceptor::startListen(const std::string& ip, uint16_t port)
+bool Acceptor::startListen(const std::string& ip/*="" */, uint16_t port/* = 8888*/)
 {
     //1.创建一个侦听socket
     m_listenfd = ::socket(AF_INET, SOCK_STREAM, 0);
@@ -62,8 +62,12 @@ bool Acceptor::startListen(const std::string& ip, uint16_t port)
     struct sockaddr_in bindaddr;
     bindaddr.sin_family = AF_INET;
     //TODO: 待修复
-    bindaddr.sin_addr.s_addr = ip/*htonl(INADDR_ANY)*/;
-    bindaddr.sin_port = port;
+    if (ip == "")
+        bindaddr.sin_addr.s_addr = htonl(INADDR_ANY);
+    else
+        bindaddr.sin_addr.s_addr = inet_addr(ip.c_str());
+
+    bindaddr.sin_port = htonl(port);
     if (::bind(m_listenfd, (struct sockaddr*)&bindaddr, sizeof(bindaddr)) == -1)
     {
         std::cout << "bind listen socket error." << std::endl;

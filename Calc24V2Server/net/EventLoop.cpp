@@ -2,27 +2,20 @@
 
 #include <sys/epoll.h>
 
-#include <memory>
 
 #include "Epoll.h"
 #include "Poll.h"
 #include "Select.h"
 
 
-bool EventLoop::init(IOMultiplexType type /*= IOMultiplexType::IOMultiplexEpoll*/)
+bool EventLoop::init()
 {
-    if (type == IOMultiplexType::IOMultiplexSelect)
-    {
-        m_spIOMultiplex = std::make_unique<Select>();
-    }
-    else if (type == IOMultiplexType::IOMultiplexPoll)
-    {
-        m_spIOMultiplex = std::make_unique<Poll>();
-    }
-    else
-    {
-        m_spIOMultiplex = std::make_unique<Epoll>();
-    }
+    //创建IO复用函数 
+    // m_pIOMultiplex = new Poll();
+    // m_pIOMultiplex = new Select();
+    m_pIOMultiplex = new Epoll();
+
+    m_epollfd = ::epoll_create(1);
 
     return m_epollfd != -1;
 }
@@ -41,10 +34,11 @@ void EventLoop::run()
 
         int n = ::epoll_wait(m_epollfd, events, 1024, timeoutMs);*/
         std::vector<IEventDispatcher*> eventDispatchers;
-        m_spIOMultiplex->poll(500000, eventDispatchers);
+        m_pIOMultiplex->poll(500000, eventDispatchers);
         for (size_t i = 0; i < eventDispatchers.size(); ++i)
         {
             eventDispatchers[i]->onRead();
+
             eventDispatchers[i]->onWrite();
         }
 
@@ -58,12 +52,11 @@ void EventLoop::run()
 
 }
 
-void EventLoop::registerReadEvents(int fd, IEventDispatcher* eventDispatcher ,bool registeFlag)
+void EventLoop::registerReadEvents(int fd, bool registeFlag)
 {
-    m_spIOMultiplex->registerReadEvent(fd, eventDispatcher, registeFlag);
 }
 
-void EventLoop::registerWriteEvents(int fd, IEventDispatcher* eventDispatcher,bool registeFlag)
+void EventLoop::registerWriteEvents(int fd, bool registeFlag)
 {
 }
 

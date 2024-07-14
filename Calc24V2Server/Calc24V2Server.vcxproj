@@ -70,6 +70,9 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(ProjectDir)appsrc;$(ProjectDir)net;$(ProjectDir)utils;$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -128,34 +131,36 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Acceptor.cpp" />
-    <ClCompile Include="ByteBuffer.cpp" />
-    <ClCompile Include="Calc24Server.cpp" />
-    <ClCompile Include="Calc24Session.cpp" />
-    <ClCompile Include="Epoll.cpp" />
-    <ClCompile Include="EventLoop.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Poll.cpp" />
-    <ClCompile Include="Select.cpp" />
-    <ClCompile Include="TCPConnection.cpp" />
-    <ClCompile Include="TCPServer.cpp" />
-    <ClCompile Include="ThreadPool.cpp" />
+    <ClCompile Include="appsrc\Calc24Server.cpp" />
+    <ClCompile Include="appsrc\Calc24Session.cpp" />
+    <ClCompile Include="appsrc\main.cpp" />
+    <ClCompile Include="net\Acceptor.cpp" />
+    <ClCompile Include="net\ByteBuffer.cpp" />
+    <ClCompile Include="net\Epoll.cpp" />
+    <ClCompile Include="net\EventLoop.cpp" />
+    <ClCompile Include="net\Poll.cpp" />
+    <ClCompile Include="net\Select.cpp" />
+    <ClCompile Include="net\TCPConnection.cpp" />
+    <ClCompile Include="net\TCPServer.cpp" />
+    <ClCompile Include="net\ThreadPool.cpp" />
+    <ClCompile Include="utils\utils.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Acceptor.h" />
-    <ClInclude Include="ByteBuffer.h" />
-    <ClInclude Include="Calc24Protocol.h" />
-    <ClInclude Include="Calc24Server.h" />
-    <ClInclude Include="Calc24Session.h" />
-    <ClInclude Include="Epoll.h" />
-    <ClInclude Include="EventLoop.h" />
-    <ClInclude Include="IEventDispatcher.h" />
-    <ClInclude Include="IOMultiplex.h" />
-    <ClInclude Include="Poll.h" />
-    <ClInclude Include="Select.h" />
-    <ClInclude Include="TCPConnection.h" />
-    <ClInclude Include="TCPServer.h" />
-    <ClInclude Include="ThreadPool.h" />
+    <ClInclude Include="appsrc\Calc24Protocol.h" />
+    <ClInclude Include="appsrc\Calc24Server.h" />
+    <ClInclude Include="appsrc\Calc24Session.h" />
+    <ClInclude Include="net\Acceptor.h" />
+    <ClInclude Include="net\ByteBuffer.h" />
+    <ClInclude Include="net\Epoll.h" />
+    <ClInclude Include="net\EventLoop.h" />
+    <ClInclude Include="net\IEventDispatcher.h" />
+    <ClInclude Include="net\IOMultiplex.h" />
+    <ClInclude Include="net\Poll.h" />
+    <ClInclude Include="net\Select.h" />
+    <ClInclude Include="net\TCPConnection.h" />
+    <ClInclude Include="net\TCPServer.h" />
+    <ClInclude Include="net\ThreadPool.h" />
+    <ClInclude Include="utils\utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

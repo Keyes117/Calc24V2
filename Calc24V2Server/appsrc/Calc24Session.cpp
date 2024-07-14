@@ -12,20 +12,19 @@ Calc24Session::Calc24Session(std::shared_ptr<TCPConnection>&& spConn):
     spConn->setCloseCallback(std::bind(Calc24Session::onClose, this));
 }
 
-bool Calc24Session::onRead(ByteBuffer& recvBuf)
+void Calc24Session::onRead(ByteBuffer& recvBuf)
 {
     //在EventLoop中已经做了recvBuf的判空
     while (true)
     {
         if (recvBuf.remaining() <= sizeof(MsgHeader))
-            return true;
+            return;
 
         MsgHeader header;
         recvBuf.peek(reinterpret_cast<char*>(&header), sizeof(MsgHeader));
 
         if (!decodePackage(recvBuf, header))
-            return false;
-
+            return;
     }
     
 }

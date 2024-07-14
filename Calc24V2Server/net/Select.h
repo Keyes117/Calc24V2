@@ -21,10 +21,6 @@ public:
     virtual void registerReadEvent(int fd, IEventDispatcher* eventDispatcher, bool readEvent) override;
     virtual void registerWriteEvent(int fd, IEventDispatcher* eventDispatcher, bool readEvent) override;
 
-    virtual void unregisterReadEvent(int fd, IEventDispatcher* eventDispatcher, bool readEvent) override  ;
-    virtual void unregisterWriteEvent(int fd, IEventDispatcher* eventDispatcher, bool readEvent) override ;
-    virtual void unregisterReadWriteEvent(int fd, IEventDispatcher* eventDispatcher, bool readEvent) override ;
-
 private:
     int                     m_maxfd;
     fd_set                  m_readfds;

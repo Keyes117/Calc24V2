@@ -7,7 +7,6 @@
 #include "EventLoop.h"
 #include "IEventDispatcher.h"
 
-
 #include <functional>
 #include <string>
 
@@ -23,7 +22,7 @@ public:
 
     virtual void onRead() override;
 
-    bool startListen(const std::string& ip, uint16_t port);
+    bool startListen(const std::string& ip="", uint16_t port=8888);
 
     void setAcceptCallback(AcceptCallback&& callback)
     {

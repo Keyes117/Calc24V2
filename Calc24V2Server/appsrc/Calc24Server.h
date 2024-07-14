@@ -13,7 +13,7 @@ public:
     ~Calc24Server() = default;
 
 
-    bool init(int32_t threadNum, const std::string& ip, uint16_t port);
+    bool init(int32_t threadNum, const std::string& ip ="", uint16_t port = 8888);
     void uninit();
 
 private:

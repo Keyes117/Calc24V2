@@ -5,11 +5,11 @@
 
 
 
-bool Calc24Server::init(int32_t threadNum, const std::string& ip, uint16_t port)
+bool Calc24Server::init(int32_t threadNum, const std::string& ip /*="" */, uint16_t port =/* =8888*/)
 {
     m_tcpServer.setConnectedCallback(std::bind(Calc24Server::onConnected,this,std::placeholders::_1);
 
-    if (!m_tcpServer.init(5,"0.0.0.0",8888))
+    if (!m_tcpServer.init(5,ip,port))
     {
         return false;
     }

@@ -12,7 +12,7 @@
 #include "IEventDispatcher.h"
 
 //ReadCallback 如果返回false 表示上层业务逻辑认为 处理出错， 希望关闭连接
-using ReadCallback = std::function<void(ByteBuffer& buf)>;
+using ReadCallback = std::function<bool(ByteBuffer& buf)>;
 using WriteCallback = std::function<void()>;
 using CloseCallback = std::function<void()>;
 
