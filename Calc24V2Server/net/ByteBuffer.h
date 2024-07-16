@@ -25,14 +25,14 @@ public:
     //这里是说类可以隐式的转成 const char*
     operator const char* ();
 
-    void append(const char* buf, int bufLen);
+    void append(const char* buf, size_t bufLen);
     //取数据 
-    void retrieve(std::string& outBuf, int buf = 0);
+    void retrieve(std::string& outBuf, size_t buf = 0);
     size_t retrieve(char* outBuf, size_t bufLen = 0);
 
     size_t peek(char* buf, size_t bufLen);
 
-    void erase(int bufLen = 0);
+    void erase(size_t bufLen = 0);
 
     int remaining();
 

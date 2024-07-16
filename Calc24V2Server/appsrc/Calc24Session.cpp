@@ -37,6 +37,14 @@ void Calc24Session::onClose()
 {
 }
 
+void Calc24Session::sendWelcomeMsg()
+{
+    const std::string& welcomeMsg = "Welcome to Calc24 Game!";
+
+    m_conn->send(welcomeMsg);
+
+}
+
 bool Calc24Session::decodePackage(ByteBuffer& recvBuf,const MsgHeader& header)
 {
     if (static_cast<MsgType>(header.msgType) == MsgType::MsgTypeWelcome)

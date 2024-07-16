@@ -16,8 +16,14 @@ public:
 
     virtual void poll(int timeoutUs, std::vector<IEventDispatcher*> triggeredEventDispatchers) = 0;
 
+    //×¢²á¶ÁÐ´ÊÂ¼þ
     virtual void registerReadEvent(int fd, IEventDispatcher* eventDispatcher, bool readEvent) = 0;
-    virtual void registerWriteEvent(int fd, IEventDispatcher* eventDispatcher, bool readEvent) = 0;
+    virtual void registerWriteEvent(int fd, IEventDispatcher* eventDispatcher, bool writeEvent) = 0;
 
+
+    //ÒÆ³ý¶ÁÐ´ÊÂ¼þ 
+    virtual void unregisterReadEvent(int fd, IEventDispatcher* eventDispatcher, bool readEvent) = 0;
+    virtual void unregisterWriteEvent(int fd, IEventDispatcher* eventDispatcher, bool readEvent) = 0;
+    virtual void unregisterAllEvent(int fd, IEventDispatcher* eventDispatcher) = 0;
 
 };

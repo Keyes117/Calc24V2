@@ -2,20 +2,27 @@
 
 #include <sys/epoll.h>
 
+#include <memory>
 
 #include "Epoll.h"
 #include "Poll.h"
 #include "Select.h"
 
 
-bool EventLoop::init()
+bool EventLoop::init(IOMultiplexType type /*= IOMultiplexType::IOMultiplexEpoll*/)
 {
-    //创建IO复用函数 
-    // m_pIOMultiplex = new Poll();
-    // m_pIOMultiplex = new Select();
-    m_pIOMultiplex = new Epoll();
-
-    m_epollfd = ::epoll_create(1);
+    if (type == IOMultiplexType::IOMultiplexSelect)
+    {
+        m_spIOMultiplex = std::make_unique<Select>();
+    }
+    else if (type == IOMultiplexType::IOMultiplexPoll)
+    {
+        m_spIOMultiplex = std::make_unique<Poll>();
+    }
+    else
+    {
+        m_spIOMultiplex = std::make_unique<Epoll>();
+    }
 
     return m_epollfd != -1;
 }
@@ -34,11 +41,10 @@ void EventLoop::run()
 
         int n = ::epoll_wait(m_epollfd, events, 1024, timeoutMs);*/
         std::vector<IEventDispatcher*> eventDispatchers;
-        m_pIOMultiplex->poll(500000, eventDispatchers);
+        m_spIOMultiplex->poll(500000, eventDispatchers);
         for (size_t i = 0; i < eventDispatchers.size(); ++i)
         {
             eventDispatchers[i]->onRead();
-
             eventDispatchers[i]->onWrite();
         }
 
@@ -52,11 +58,31 @@ void EventLoop::run()
 
 }
 
-void EventLoop::registerReadEvents(int fd, bool registeFlag)
+void EventLoop::registerReadEvents(int fd, IEventDispatcher* eventDispatcher ,bool readEvent)
 {
+    m_spIOMultiplex->registerReadEvent(fd, eventDispatcher, readEvent);
 }
 
-void EventLoop::registerWriteEvents(int fd, bool registeFlag)
+void EventLoop::registerWriteEvents(int fd, IEventDispatcher* eventDispatcher,bool writeEvent)
 {
+    m_spIOMultiplex->registerReadEvent(fd, eventDispatcher, writeEvent);
+}
+
+void EventLoop::unregisterReadEvents(int fd, IEventDispatcher* eventDispatcher, bool readEvent)
+{
+    m_spIOMultiplex->unregisterReadEvent(fd, eventDispatcher, readEvent);
+}
+
+
+void EventLoop::unregisterWriteEvents(int fd, IEventDispatcher* eventDispatcher, bool writeEvent)
+{
+    m_spIOMultiplex->unregisterReadEvent(fd, eventDispatcher, writeEvent);
+
+}
+
+
+void EventLoop::unregisterAllEvents(int fd, IEventDispatcher* eventDispatcher)
+{
+    m_spIOMultiplex->unregisterAllEvent(fd, eventDispatcher);
 }
 

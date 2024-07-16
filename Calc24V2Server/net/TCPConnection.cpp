@@ -106,7 +106,6 @@ bool TCPConnection::send(const char* buf, int bufLen)
 {
     m_sendBuf.append(buf, bufLen);
 
-
     while (true)
     {
         int sendLength = ::send(m_fd, m_sendBuf, m_sendBuf.remaining(), 0);
@@ -179,11 +178,9 @@ void TCPConnection::onRead()
     m_recvBuf.append(buf, recvLength);
 
     //解包
-    if (!m_readCallback(m_recvBuf))
-    {
-        //关闭链接 
-        onClose();
-    }
+    //m_readCallback=>Calc24Session::onRead
+    m_readCallback(m_recvBuf);
+   
 }
 
 void TCPConnection::onWrite()
@@ -194,7 +191,6 @@ void TCPConnection::onWrite()
     while (true)
     {
         int sendLength = ::send(m_fd, m_sendBuf, m_sendBuf.remaining(), 0);
-
         if (sendLength == 0)
         {
             //对端关闭了链接 
@@ -210,7 +206,7 @@ void TCPConnection::onWrite()
                 //当前数据由于TCP窗口太小，数据发不出去
                 m_writeCallback();
 
-                registerWriteEvent();
+                unregisterWriteEvent();
 
                 return;
             }
@@ -247,7 +243,7 @@ void TCPConnection::registerWriteEvent()
         return;
 
     //向IO复用函数注册写事件 
-    m_spEventLoop->registerWriteEvents(m_fd, true);
+    m_spEventLoop->registerWriteEvents(m_fd,this, true);
 
 }
 
@@ -258,13 +254,13 @@ void TCPConnection::unregisterWriteEvent()
 
     //向IO复用函数反注册写事件
 
-    m_spEventLoop->registerWriteEvents(m_fd, false);
+    m_spEventLoop->registerWriteEvents(m_fd,this, false);
     m_registerWriteEvent = false;
 }
 
 void TCPConnection::unregisterAllEvent()
 {
     //向IO复用函数反注册所有读写事件
-    m_spEventLoop->registerReadEvents(m_fd, false);
-    m_spEventLoop->registerWriteEvents(m_fd, false);
+    m_spEventLoop->unregisterAllEvents(m_fd, this);
+
 }

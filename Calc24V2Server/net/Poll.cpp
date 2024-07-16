@@ -21,3 +21,16 @@ void Poll::registerWriteEvent(int fd, IEventDispatcher* eventDispatcher, bool re
     //往数组m_pollfd后面添加元素
     //向m_pollfd 结构中添加 pollfd;
 }
+
+void Poll::unregisterReadEvent(int fd, IEventDispatcher* eventDispatcher, bool readEvent)
+{
+}
+
+void Poll::unregisterWriteEvent(int fd, IEventDispatcher* eventDispatcher, bool readEvent)
+{
+}
+
+void Poll::unregisterAllEvent(int fd, IEventDispatcher* eventDispatcher)
+{
+}
+

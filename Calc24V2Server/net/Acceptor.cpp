@@ -1,5 +1,13 @@
 #include "Acceptor.h"
 
+#include <arpa/inet.h>
+#include <netinet/in.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <unistd.h>
+
+#include <iostream>
+
 Acceptor::Acceptor(EventLoop* pEventLoop):
     m_pEventLoop(pEventLoop)
 {
@@ -18,8 +26,8 @@ void Acceptor::onRead()
 {
     while (true)
     {
-        struct sockaddr_in clientAddr;
-        socklen_t clientAddrlen = sizeof(clientaddr);
+        struct sockaddr clientAddr;
+        socklen_t clientAddrlen = sizeof(clientAddr);
         //4. 接受客户端连接
         int clientfd = ::accept4(m_listenfd, (struct sockaddr*)&clientAddr, &clientAddrlen, SOCK_NONBLOCK);
 
@@ -32,7 +40,7 @@ void Acceptor::onRead()
         else if (clientfd == -1)
         {
             //没有连接
-            if (errno = EWOULDBLOCK)
+            if (errno == EWOULDBLOCK)
                 return;
             else
                 return;
@@ -74,7 +82,6 @@ bool Acceptor::startListen(const std::string& ip/*="" */, uint16_t port/* = 8888
         return false;
     }
 
-
     //3.启动侦听
     if (::listen(m_listenfd, SOMAXCONN) == -1)
     {
@@ -82,7 +89,7 @@ bool Acceptor::startListen(const std::string& ip/*="" */, uint16_t port/* = 8888
         return false;
     }
 
-    m_pEventLoop->registerReadEvents(m_listenfd, true);
+    m_pEventLoop->registerReadEvents(m_listenfd,this, true);
 
     return true;
 }

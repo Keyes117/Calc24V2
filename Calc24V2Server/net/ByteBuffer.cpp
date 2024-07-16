@@ -1,5 +1,7 @@
 #include "ByteBuffer.h"
 
+#include <string.h>
+
 ByteBuffer::ByteBuffer()
 {
 }
@@ -46,12 +48,12 @@ ByteBuffer::operator const char* ()
     return m_internalBuf.c_str();
 }
 
-void ByteBuffer::append(const char* buf, int bufLen)
+void ByteBuffer::append(const char* buf, size_t bufLen)
 {
     m_internalBuf.append(buf, bufLen);
 }
 
-void ByteBuffer::retrieve(std::string& outBuf, int bufLen/* = 0*/)
+void ByteBuffer::retrieve(std::string& outBuf, size_t bufLen/* = 0*/)
 {
     if (bufLen == 0 || bufLen >= m_internalBuf.length())
     {
@@ -90,7 +92,7 @@ size_t ByteBuffer::peek(char* buf, size_t bufLen)
     return bufLen;
 }
 
-void ByteBuffer::erase(int bufLen /*= 0*/)
+void ByteBuffer::erase(size_t bufLen /*= 0*/)
 {
     if (bufLen == 0 || bufLen >= m_internalBuf.length())
     {

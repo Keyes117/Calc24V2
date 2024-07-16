@@ -31,3 +31,16 @@ void Select::registerReadEvent(int fd, IEventDispatcher* eventDispatcher, bool r
 void Select::registerWriteEvent(int fd, IEventDispatcher* eventDispatcher, bool readEvent)
 {
 }
+
+
+void Select::unregisterReadEvent(int fd, IEventDispatcher* eventDispatcher, bool readEvent)
+{
+}
+
+void Select::unregisterWriteEvent(int fd, IEventDispatcher* eventDispatcher, bool readEvent)
+{
+}
+
+void Select::unregisterAllEvent(int fd, IEventDispatcher* eventDispatcher)
+{
+}
