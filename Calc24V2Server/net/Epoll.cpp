@@ -2,11 +2,14 @@
 
 #include <sys/epoll.h>
 
+
+#include <string.h>
+
 #include "utils.h"
 Epoll::Epoll()
 {
     //创建一个fd
-    m_epollfd = ::epoll_create(EPOLL_CREATE);
+    m_epollfd = ::epoll_create1(EPOLL_CLOEXEC);
     if (m_epollfd < 0)
     {
         crash();
@@ -39,11 +42,11 @@ void Epoll::poll(int timeoutUs, std::vector<IEventDispatcher*> triggeredEventDis
             enableWrite = true;
         else
             enableWrite = false;
-            
+
 
         //events[0].data->ptr; // IEventDispachter* 
-        IEventDispatcher* eventDispatcher = events[0].data->ptr;
-        eventDispatcher->enableReadWrite(enableRead,enableWrite);
+        IEventDispatcher* eventDispatcher = static_cast<IEventDispatcher*>(events[0].data.ptr);
+        eventDispatcher->enableReadWrite(enableRead, enableWrite);
         triggeredEventDispatchers.push_back(eventDispatcher);
     }
 }
@@ -66,8 +69,8 @@ void Epoll::registerReadEvent(int fd, IEventDispatcher* eventDispatcher, bool re
         if (eventFlag & EPOLLIN)
             return;
 
-            eventFlag |= EPOLLIN;
-            m_fdEventFlags[fd] = eventFlag;
+        eventFlag |= EPOLLIN;
+        m_fdEventFlags[fd] = eventFlag;
     }
 
 
@@ -75,7 +78,7 @@ void Epoll::registerReadEvent(int fd, IEventDispatcher* eventDispatcher, bool re
     memset(&event, 0, sizeof(event));
     event.events = eventFlag;
 
-       
+
     event.data.ptr = eventDispatcher;
     if (::epoll_ctl(m_epollfd, EPOLL_CTL_ADD, fd, &event) < 0)
     {
@@ -144,10 +147,10 @@ void Epoll::unregisterReadEvent(int fd, IEventDispatcher* eventDispatcher, bool 
         else
         {
             m_fdEventFlags[fd] = eventFlag;
-            operation = EPOLL_CTL_MOD
+            operation = EPOLL_CTL_MOD;
         }
 
-        
+
     }
 
     struct epoll_event event;
@@ -184,7 +187,7 @@ void Epoll::unregisterWriteEvent(int fd, IEventDispatcher* eventDispatcher, bool
         else
         {
             m_fdEventFlags[fd] = eventFlag;
-            operation = EPOLL_CTL_MOD
+            operation = EPOLL_CTL_MOD;
         }
 
 

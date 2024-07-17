@@ -21,8 +21,8 @@ public:
     virtual void registerReadEvent(int fd, IEventDispatcher* eventDispatcher, bool readEvent) override;
     virtual void registerWriteEvent(int fd, IEventDispatcher* eventDispatcher, bool readEvent) override;
 
-    virtual void unregisterReadEvent(int fd, IEventDispatcher* eventDispatcher, bool readEvent) override  ;
-    virtual void unregisterWriteEvent(int fd, IEventDispatcher* eventDispatcher, bool readEvent) override ;
+    virtual void unregisterReadEvent(int fd, IEventDispatcher* eventDispatcher, bool readEvent) override;
+    virtual void unregisterWriteEvent(int fd, IEventDispatcher* eventDispatcher, bool readEvent) override;
     virtual void unregisterAllEvent(int fd, IEventDispatcher* eventDispatcher) override;
 
 private:

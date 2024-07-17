@@ -3,7 +3,7 @@
 void Poll::poll(int timeoutUs, std::vector<IEventDispatcher*> triggeredEventDispatchers)
 {
     //使用Poll 函数 
-    poll(....);
+    //poll(....);
 
     //拿到有事件的fd
     //遍历有事件的fd,通过m_eventDispachters 获取 IEventDispachter

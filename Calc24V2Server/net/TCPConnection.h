@@ -20,18 +20,16 @@ using CloseCallback = std::function<void()>;
 class TCPConnection : public IEventDispatcher
 {
 public:
-    TCPConnection(int clientfd,const std::shared_ptr<EventLoop>& spEventLoop);
+    TCPConnection(int clientfd, const std::shared_ptr<EventLoop>& spEventLoop);
     virtual ~TCPConnection();
 
-    bool startRead();
+    void startRead();
 
     TCPConnection(const TCPConnection& rhs);
     TCPConnection& operator=(const TCPConnection& rhs);
 
     TCPConnection(TCPConnection&& rhs) noexcept;
-    TCPConnection& operator=(TCPConnection&& rhs);
-
-
+    TCPConnection& operator=(TCPConnection&& rhs) noexcept;
 
     void setReadCallback(ReadCallback&& readCallback)
     {
@@ -47,7 +45,6 @@ public:
     {
         m_closeCallback = std::move(closeCallback);
     }
-
 
     bool send(const char* buf, int bufLen);
     bool send(const std::string& buf);

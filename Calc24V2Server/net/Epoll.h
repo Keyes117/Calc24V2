@@ -16,7 +16,7 @@
 
 class Epoll : public IOMultiplex
 {
-public:   
+public:
 
     Epoll();
     virtual ~Epoll();
@@ -43,10 +43,10 @@ private:
 
 private:
     Epoll(const Epoll& rhs) = delete;
-    Epoll operator(const Epoll& rhs) = delete;
+    Epoll operator=(const Epoll& rhs) = delete;
 
     Epoll(Epoll&& rhs) = delete;
-    Epoll operator(Epoll&& rhs) = delete;
+    Epoll operator=(Epoll&& rhs) = delete;
 
 };
 

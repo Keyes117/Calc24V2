@@ -2,13 +2,15 @@
 
 #include <sys/socket.h>
 #include <sys/types.h>
+#include <unistd.h>
+
 #include <cstdlib>
 
 //#include <cerrno>
 
-TCPConnection::TCPConnection(int clientfd, const std::shared_ptr<EventLoop>& spEventLoop):
+TCPConnection::TCPConnection(int clientfd, const std::shared_ptr<EventLoop>& spEventLoop) :
     m_fd(clientfd),
-    m_spEventLoop(spEventLoop)    
+    m_spEventLoop(spEventLoop)
 {
 
 }
@@ -18,9 +20,9 @@ TCPConnection::~TCPConnection()
     ::close(m_fd);
 }
 
-bool TCPConnection::startRead()
+void TCPConnection::startRead()
 {
-    m_spEventLoop->registerReadEvents(m_fd, true);
+    m_spEventLoop->registerReadEvents(m_fd, this, true);
 }
 
 TCPConnection::TCPConnection(const TCPConnection& rhs) :
@@ -180,7 +182,7 @@ void TCPConnection::onRead()
     //解包
     //m_readCallback=>Calc24Session::onRead
     m_readCallback(m_recvBuf);
-   
+
 }
 
 void TCPConnection::onWrite()
@@ -243,7 +245,7 @@ void TCPConnection::registerWriteEvent()
         return;
 
     //向IO复用函数注册写事件 
-    m_spEventLoop->registerWriteEvents(m_fd,this, true);
+    m_spEventLoop->registerWriteEvents(m_fd, this, true);
 
 }
 
@@ -254,7 +256,7 @@ void TCPConnection::unregisterWriteEvent()
 
     //向IO复用函数反注册写事件
 
-    m_spEventLoop->registerWriteEvents(m_fd,this, false);
+    m_spEventLoop->registerWriteEvents(m_fd, this, false);
     m_registerWriteEvent = false;
 }
 
