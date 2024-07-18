@@ -33,7 +33,7 @@ private:
 private:
     bool                                                m_stop{ false };
     size_t                                              m_lastEventLoopNo{ 0 };
-    
+
     std::vector<std::shared_ptr<std::thread>>           m_threads;
     std::vector<std::shared_ptr<EventLoop>>             m_eventLoops;
 

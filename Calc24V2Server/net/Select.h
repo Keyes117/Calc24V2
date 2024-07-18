@@ -15,6 +15,10 @@
 class Select : public IOMultiplex
 {
 public:
+
+    Select() = default;
+    virtual ~Select() = default;
+
     virtual void poll(int timeoutUs, std::vector<IEventDispatcher*> triggeredEventDispatchers) override;
 
 

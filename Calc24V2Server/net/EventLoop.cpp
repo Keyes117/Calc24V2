@@ -9,6 +9,14 @@
 #include "Select.h"
 
 
+EventLoop::EventLoop()
+{
+}
+
+EventLoop::~EventLoop()
+{
+}
+
 bool EventLoop::init(IOMultiplexType type /*= IOMultiplexType::IOMultiplexEpoll*/)
 {
     if (type == IOMultiplexType::IOMultiplexSelect)
@@ -58,12 +66,12 @@ void EventLoop::run()
 
 }
 
-void EventLoop::registerReadEvents(int fd, IEventDispatcher* eventDispatcher ,bool readEvent)
+void EventLoop::registerReadEvents(int fd, IEventDispatcher* eventDispatcher, bool readEvent)
 {
     m_spIOMultiplex->registerReadEvent(fd, eventDispatcher, readEvent);
 }
 
-void EventLoop::registerWriteEvents(int fd, IEventDispatcher* eventDispatcher,bool writeEvent)
+void EventLoop::registerWriteEvents(int fd, IEventDispatcher* eventDispatcher, bool writeEvent)
 {
     m_spIOMultiplex->registerReadEvent(fd, eventDispatcher, writeEvent);
 }

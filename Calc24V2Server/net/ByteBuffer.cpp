@@ -8,6 +8,7 @@ ByteBuffer::ByteBuffer()
 
 ByteBuffer::~ByteBuffer()
 {
+
 }
 
 ByteBuffer::ByteBuffer(const ByteBuffer& rhs) :

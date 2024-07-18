@@ -17,6 +17,10 @@
 class Poll : public IOMultiplex
 {
 public:
+
+    Poll() = default;
+    virtual ~Poll() = default;
+
     virtual void poll(int timeoutUs, std::vector<IEventDispatcher*> triggeredEventDispatchers) override;
 
 
@@ -28,9 +32,9 @@ public:
     virtual void unregisterAllEvent(int fd, IEventDispatcher* eventDispatcher) override;
 
 private:
-    struct pollfd *m_pollfd;
+    struct pollfd* m_pollfd;
     //key fd, value -
     std::map<int, IEventDispatcher*> m_eventDispachters;
 
-}; 
+};
 

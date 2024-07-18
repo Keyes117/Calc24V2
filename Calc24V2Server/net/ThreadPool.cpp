@@ -11,14 +11,14 @@ void ThreadPool::start(int32_t threadNum /*=1*/)
     if (threadNum <= 0 || threadNum > MAX_THREAD_NUM)
         threadNum = DEFAULT_THREAD_NUM;
 
-    for (size_t i = 0; i < threadNum; ++i)
+    for (int32_t i = 0; i < threadNum; ++i)
     {
         auto spEventLoop = std::make_shared<EventLoop>();
         spEventLoop->init();
         m_eventLoops.push_back(std::move(spEventLoop));
 
         //pthread_create
-        auto spThread = std::make_shared<std::thread>(threadFunc,this,i);
+        auto spThread = std::make_shared<std::thread>(&ThreadPool::threadFunc, this, i);
         m_threads.push_back(std::move(spThread));
 
     }

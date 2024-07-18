@@ -5,11 +5,12 @@
 
 
 
-bool Calc24Server::init(int32_t threadNum, const std::string& ip /*="" */, uint16_t port =/* =8888*/)
+bool Calc24Server::init(int32_t threadNum, const std::string& ip /*="" */, uint16_t port /* =8888*/)
 {
-    m_tcpServer.setConnectedCallback(std::bind(Calc24Server::onConnected,this,std::placeholders::_1);
 
-    if (!m_tcpServer.init(5,ip,port))
+    m_tcpServer.setConnectedCallback(std::bind(Calc24Server::onConnected, this, std::placeholders::_1));
+
+    if (!m_tcpServer.init(5, ip, port))
     {
         return false;
     }
@@ -32,4 +33,5 @@ void Calc24Server::onConnected(std::shared_ptr<TCPConnection>& spConn)
 
 void Calc24Server::onDisConnected(std::shared_ptr<TCPConnection>& spConn)
 {
+
 }

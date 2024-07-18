@@ -41,12 +41,9 @@ public:
 
 
 public:
-
     void onConnected(std::shared_ptr<TCPConnection>& spConn);
     void onDisConnected(std::shared_ptr<TCPConnection>& spConn);
 
-
-    
 
 private:
     //客户端的连接应该有Server来管理，Acceptor应该只管理监听
@@ -60,8 +57,8 @@ private:
     ThreadPool                                                  m_threadPool;
 
     EventLoop                                                   m_baseEventLoop;
-    Acceptor*                                                   m_acceptor;
-    
+    Acceptor* m_acceptor;
+
     std::unordered_map<int, std::shared_ptr<TCPConnection>>     m_connections;
 
     onConnectedCallback                                         m_connectedCallback;
