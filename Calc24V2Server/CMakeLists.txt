@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.00)
 
-project (CALC24_Server)
+project (Calc24_Server)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -g -Wall -O0 -Wno-unused-variable -pthread")
 
@@ -34,10 +34,10 @@ set(app_srcs
 )
 
 
-add_executable(CALC24_Server
+add_executable(Calc24_Server
     ${net_srcs} 
     ${util_srcs} 
     ${app_srcs}
 )
 #�������Ŀ¼��û�õģ�������ʹ��TARGET_LINK_LIBRARIES���Ӹÿ�
-TARGET_LINK_LIBRARIES(CALC24_Server)
+TARGET_LINK_LIBRARIES(Calc24_Server)

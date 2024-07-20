@@ -7,7 +7,7 @@ class IEventDispatcher
 {
 public:
     IEventDispatcher() = default;
-    virtual ~IEventDispatcher() = 0;
+    virtual ~IEventDispatcher() = default;
 
     virtual void onRead() = 0;
     virtual void onWrite() = 0;

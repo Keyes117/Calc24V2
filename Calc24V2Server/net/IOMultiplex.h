@@ -12,7 +12,7 @@ class IOMultiplex
 {
 public:
     IOMultiplex() = default;
-    virtual ~IOMultiplex() = 0;
+    virtual ~IOMultiplex() = default;
 
     virtual void poll(int timeoutUs, std::vector<IEventDispatcher*> triggeredEventDispatchers) = 0;
 

@@ -7,7 +7,7 @@
 int main()
 {
     Calc24Server calc24Serevr;
-    if (!calc24Serevr.init(5, "0.0.0.0", 8888))
+    if (!calc24Serevr.init(5, "127.0.0.1", 8888))
     {
         return 0;
     }
