@@ -14,7 +14,7 @@ public:
     IOMultiplex() = default;
     virtual ~IOMultiplex() = default;
 
-    virtual void poll(int timeoutUs, std::vector<IEventDispatcher*> triggeredEventDispatchers) = 0;
+    virtual void poll(int timeoutUs, std::vector<IEventDispatcher*>& triggeredEventDispatchers) = 0;
 
     //×¢²á¶ÁÐ´ÊÂ¼þ
     virtual void registerReadEvent(int fd, IEventDispatcher* eventDispatcher, bool readEvent) = 0;

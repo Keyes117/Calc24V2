@@ -20,7 +20,7 @@ Epoll::~Epoll()
 {
 }
 
-void Epoll::poll(int timeoutUs, std::vector<IEventDispatcher*> triggeredEventDispatchers)
+void Epoll::poll(int timeoutUs, std::vector<IEventDispatcher*>& triggeredEventDispatchers)
 {
     // π”√epoll_wait
 

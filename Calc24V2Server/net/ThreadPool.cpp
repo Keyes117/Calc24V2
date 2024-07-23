@@ -16,11 +16,13 @@ void ThreadPool::start(int32_t threadNum /*=1*/)
         auto spEventLoop = std::make_shared<EventLoop>();
         spEventLoop->init();
         m_eventLoops.push_back(std::move(spEventLoop));
+    }
 
+    for (int32_t i = 0; i < threadNum; ++i)
+    {
         //pthread_create
         auto spThread = std::make_shared<std::thread>(&ThreadPool::threadFunc, this, i);
         m_threads.push_back(std::move(spThread));
-
     }
 }
 

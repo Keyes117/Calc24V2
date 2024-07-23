@@ -32,6 +32,8 @@ bool EventLoop::init(IOMultiplexType type /*= IOMultiplexType::IOMultiplexEpoll*
         m_spIOMultiplex = std::make_unique<Epoll>();
     }
 
+    m_running = true;
+
     return m_epollfd != -1;
 }
 
@@ -44,10 +46,6 @@ void EventLoop::run()
 
         //2. 使用select/poll/epoll 等IO复用函数检测一组socket
 
-  /*      struct epoll_event events[1024];
-        int timeoutMs = 500;
-
-        int n = ::epoll_wait(m_epollfd, events, 1024, timeoutMs);*/
         std::vector<IEventDispatcher*> eventDispatchers;
         m_spIOMultiplex->poll(500000, eventDispatchers);
         for (size_t i = 0; i < eventDispatchers.size(); ++i)
@@ -73,7 +71,7 @@ void EventLoop::registerReadEvents(int fd, IEventDispatcher* eventDispatcher, bo
 
 void EventLoop::registerWriteEvents(int fd, IEventDispatcher* eventDispatcher, bool writeEvent)
 {
-    m_spIOMultiplex->registerReadEvent(fd, eventDispatcher, writeEvent);
+    m_spIOMultiplex->registerWriteEvent(fd, eventDispatcher, writeEvent);
 }
 
 void EventLoop::unregisterReadEvents(int fd, IEventDispatcher* eventDispatcher, bool readEvent)
@@ -84,7 +82,7 @@ void EventLoop::unregisterReadEvents(int fd, IEventDispatcher* eventDispatcher, 
 
 void EventLoop::unregisterWriteEvents(int fd, IEventDispatcher* eventDispatcher, bool writeEvent)
 {
-    m_spIOMultiplex->unregisterReadEvent(fd, eventDispatcher, writeEvent);
+    m_spIOMultiplex->unregisterWriteEvent(fd, eventDispatcher, writeEvent);
 
 }
 

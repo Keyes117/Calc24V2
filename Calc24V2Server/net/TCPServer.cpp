@@ -13,7 +13,7 @@ bool TCPServer::init(int32_t threadNum, const std::string& ip, uint16_t port)
     m_baseEventLoop.init();
 
     m_acceptor = new Acceptor(&m_baseEventLoop);
-    if (m_acceptor->startListen(ip, port))
+    if (!m_acceptor->startListen(ip, port))
         return false;
 
     //TODO:AcceptCallback实际只有一个参数， 但是bind 了this指针 会有问题吗？

@@ -1,6 +1,6 @@
 #include "Poll.h"
 
-void Poll::poll(int timeoutUs, std::vector<IEventDispatcher*> triggeredEventDispatchers)
+void Poll::poll(int timeoutUs, std::vector<IEventDispatcher*>& triggeredEventDispatchers)
 {
     //Ê¹ÓÃPoll º¯Êý 
     //poll(....);

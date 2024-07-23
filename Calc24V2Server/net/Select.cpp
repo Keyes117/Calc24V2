@@ -1,7 +1,7 @@
 #include "Select.h"
 
 
-void Select::poll(int timeoutUs, std::vector<IEventDispatcher*> triggeredEventDispatchers)
+void Select::poll(int timeoutUs, std::vector<IEventDispatcher*>& triggeredEventDispatchers)
 {
     /* struct timeval tv;
      tv.tv_sec = timeoutUs / 1000000;

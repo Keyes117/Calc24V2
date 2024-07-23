@@ -41,7 +41,7 @@ public:
     void unregisterAllEvents(int fd, IEventDispatcher* eventDispatcher) ;
 
 private:
-    bool            m_running{ true };
+    bool            m_running{ false };
     int             m_epollfd;
 
 

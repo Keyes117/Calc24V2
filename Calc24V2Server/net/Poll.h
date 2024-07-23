@@ -21,7 +21,7 @@ public:
     Poll() = default;
     virtual ~Poll() = default;
 
-    virtual void poll(int timeoutUs, std::vector<IEventDispatcher*> triggeredEventDispatchers) override;
+    virtual void poll(int timeoutUs, std::vector<IEventDispatcher*>& triggeredEventDispatchers) override;
 
 
     virtual void registerReadEvent(int fd, IEventDispatcher* eventDispatcher, bool readEvent) override;
